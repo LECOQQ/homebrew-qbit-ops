@@ -1,0 +1,56 @@
+name: Lint
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+# Homebrew 6.0 made `brew doctor` exit non-zero on taps it does not
+# trust, which broke third-party tap CI everywhere (Homebrew/brew#22494).
+# A fix shipped, but the variable stays: in this repository "untrusted"
+# is the expected state -- the tap under test is the one being linted.
+env:
+  HOMEBREW_NO_REQUIRE_TAP_TRUST: 1
+
+jobs:
+  syntax:
+    name: Ruby syntax
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the tap
+        uses: actions/checkout@v4
+
+      - name: Parse every formula
+        # Depends on nothing but Ruby, deliberately. It still answers
+        # when the Homebrew job below cannot run at all -- and a formula
+        # Ruby cannot parse is the one failure that makes the tap
+        # uninstallable rather than merely untidy.
+        run: |
+          shopt -s nullglob
+          files=(Formula/*.rb)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "::error::No formula under Formula/. An empty tap installs nothing."
+            exit 1
+          fi
+          for file in "${files[@]}"; do
+            echo "checking $file"
+            ruby -c "$file"
+          done
+
+  style:
+    name: Homebrew style
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the tap
+        uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: brew style
+        # Homebrew's own RuboCop rules: stanza order, formula naming,
+        # resource formatting. Catches what `ruby -c` cannot, because a
+        # formula can parse perfectly and still be rejected.
+        run: brew style Formula/qbit-ops.rb
