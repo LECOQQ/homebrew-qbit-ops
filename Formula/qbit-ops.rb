@@ -3,8 +3,8 @@ class QbitOps < Formula
 
   desc "Tiny qBittorrent CLI that won't nuke your seedbox"
   homepage "https://github.com/LECOQQ/qbit-ops"
-  url "https://files.pythonhosted.org/packages/b7/22/d095b670bc36c0dfb78011b738e7a0d4b418b815629e4690c4d7d25d83bb/qbit_ops-0.4.0.tar.gz"
-  sha256 "4ffd3bd3a6e9c952c6a0a3ecc773e70368e9c1a88e94144b95b2e3d7fccc1472"
+  url "https://files.pythonhosted.org/packages/b4/bb/bd39e53cf446832bf9cacf7ed3da590f90ba9708a216d7a6e77920e04908/qbit_ops-0.5.0.tar.gz"
+  sha256 "04c6fbf66dd033d7b1b9dcc63d012afe839c8979c1ca036a5e688867f1c8be29"
   license "MIT"
 
   depends_on "python@3.13"
