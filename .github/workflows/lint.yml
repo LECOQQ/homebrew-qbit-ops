@@ -47,7 +47,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@main
 
       - name: brew style
         # Homebrew's own RuboCop rules: stanza order, formula naming,
