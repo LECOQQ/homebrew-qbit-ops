@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>LECOQQ/renovate-config",
+    "local>LECOQQ/renovate-config:github",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "packageRules": [
+    {
+      "description": "The formula follows qbit-ops releases, bumped by qbit-ops' own release workflow; Renovate leaves it alone",
+      "matchManagers": ["homebrew"],
+      "enabled": false
+    }
+  ]
+}
